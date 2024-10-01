@@ -1,0 +1,70 @@
+CREATE TABLE Nutzer (
+NutzerID INT(20) NOT NULL AUTO_INCREMENT,
+Vorname varchar(20) NOT NULL,
+Nachname varchar(20) NOT NULL,
+Passwort varchar(16) NOT NULL,
+E_Mail varchar(20) NOT NULL ,
+Bild varchar(50),
+Registierdatum DATE NOT NULL,
+PRIMARY KEY (NutzerID)
+);
+
+
+CREATE TABLE Beitraege (
+    BeitragID INT NOT NULL Auto_Increment, 
+    NutzerID Int(20) NOT NULL,
+    Inhalt VARCHAR(40) NOT NULL,            
+    Status Boolean NOT NULL,     
+    Privat Boolean NOT NULL,           
+    Erstellungsdatum DATE NOT NULL,            
+    BearbeitungsDatum DATE NOT NULL,
+    Title VARCHAR(20),
+    PRIMARY KEY(BeitragID),
+    FOREIGN KEY (NutzerID) REFERENCES Nutzer(NutzerID)
+);
+	
+    
+    
+CREATE TABLE Kommentare (
+    KommentareID INT NOT NULL Auto_Increment,
+    ParentID Int(20) NOT NULL,
+    NutzerID int(20) NOT NULL,
+    BeitragID int(20) NOT NULL,
+    Inhalt VARCHAR(40) NOT NULL,       
+    Erstellungsdatum DATE NOT NULL,            
+    BearbeitungsDatum DATE NOT NULL,
+    PRIMARY KEY(KommentareID),
+    FOREIGN KEY (NutzerID) REFERENCES Nutzer(NutzerID),
+    FOREIGN KEY (BeitragID) REFERENCES Beitraege(BeitragID),
+    FOREIGN KEY (ParentID) REFERENCES Kommentare(KommentareID)
+      
+);
+
+
+
+INSERT INTO Nutzer 
+VALUES(111, "Tomas", "Müller", "123qwe", "tomas@gmail.com", "Natür", "2024-01-01"),
+(112, "Heinz", "Michael", "456rtz", "heinz@gmail.com", "Wald", "2024-02-01"),
+(113, "Hans", "Daum", "789uio", "hans@gmail.com", "Stadt", "2024-03-01"),
+(114, "Petra", "Silber", "890opü", "petra@gmail.com", "Family", "2024-04-01"),
+(115, "Kemal", "Gold", "135qaf", "gold@gmail.com", "Meer", "2024-05-01");
+
+
+
+INSERT INTO Beitraege
+VALUES (91, 111, "Beschreibung1", False, True, "2022-03-03", "2024-03-03", "Fussball"),
+(92, 112, "Beschreibung2", False, False, "2022-04-03", "2024-04-03", "Basketball"),
+(93, 113, "Beschreibung3", True, True, "2022-05-03", "2024-05-03", "Voleyball"),
+(94, 114, "Beschreibung4", True, False, "2022-06-03", "2024-06-03", "Baseball"),
+(95, 115, "Beschreibung5", False, True, "2022-07-03", "2024-07-03", "Tennis");
+
+
+
+
+
+INSERT INTO Kommentare
+VALUES (21, 21, 111, 91, "Bewerbung1", "2022-03-03", "2024-03-03"),
+(22, 22, 112, 92, "Bewerbung2", "2022-04-03", "2024-04-03"),
+(23, 23, 113, 93, "Bewerbung3", "2022-05-03", "2024-05-03"),
+(24, 24, 114, 94, "Bewerbung4", "2022-06-03", "2024-06-03"),
+(25, 25, 115, 95, "Bewerbung5", "2022-07-03", "2024-07-03");
